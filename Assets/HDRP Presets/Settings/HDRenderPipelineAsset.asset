@@ -347,3 +347,5 @@ MonoBehaviour:
   beforePostProcessCustomPostProcesses: []
   afterPostProcessCustomPostProcesses:
   - Pixelation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - HDRPAdditions.VignetteCustom, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null

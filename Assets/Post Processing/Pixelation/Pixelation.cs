@@ -17,7 +17,7 @@ public sealed class Pixelation : CustomPostProcessVolumeComponent, IPostProcessC
     public override CustomPostProcessInjectionPoint injectionPoint => CustomPostProcessInjectionPoint.AfterPostProcess;
 
     const string kShaderName = "Hidden/Shader/Pixelation";
-    
+
     public override void Setup()
     {
         if (Shader.Find(kShaderName) != null)
