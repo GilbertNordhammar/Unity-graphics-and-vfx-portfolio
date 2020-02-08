@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5843393878251645724
+--- !u!114 &-4813540482125101631
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,49 +9,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c1be1b6c95cd2e41b27903b9270817f, type: 3}
-  m_Name: Vignette
+  m_Script: {fileID: 11500000, guid: a0db42a733323df4497447071224eb7a, type: 3}
+  m_Name: VignetteCustom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
-  mode:
+  _enabled:
     m_OverrideState: 1
-    m_Value: 0
-  color:
+    m_Value: 1
+  _color:
     m_OverrideState: 1
     m_Value: {r: 0, g: 0, b: 0, a: 1}
     hdr: 0
-    showAlpha: 0
+    showAlpha: 1
     showEyeDropper: 1
-  center:
+  _center:
     m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
-  intensity:
+  _intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 1.6
+    min: 0
+    max: 10
+  _smoothness:
+    m_OverrideState: 1
+    m_Value: 0.26
     min: 0
     max: 1
-  smoothness:
-    m_OverrideState: 1
-    m_Value: 0.01
-    min: 0.01
-    max: 1
-  roundness:
+  _rounded:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
-  rounded:
-    m_OverrideState: 1
-    m_Value: 0
-  mask:
-    m_OverrideState: 1
-    m_Value: {fileID: 0}
-  opacity:
-    m_OverrideState: 1
-    m_Value: 1
-    min: 0
-    max: 1
 --- !u!114 &-2357437503786069949
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -105,47 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 5116155327792132292}
-  - {fileID: -5843393878251645724}
-  - {fileID: 3483358080813827344}
---- !u!114 &3483358080813827344
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0db42a733323df4497447071224eb7a, type: 3}
-  m_Name: VignetteCustom
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  _enabled:
-    m_OverrideState: 1
-    m_Value: 1
-  _color:
-    m_OverrideState: 1
-    m_Value: {r: 0, g: 0, b: 0, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  _center:
-    m_OverrideState: 1
-    m_Value: {x: 0.5, y: 0.5}
-  _intensity:
-    m_OverrideState: 1
-    m_Value: 1.1
-    min: 0
-    max: 10
-  _smoothness:
-    m_OverrideState: 1
-    m_Value: 0.75
-    min: 0
-    max: 1
-  _rounded:
-    m_OverrideState: 1
-    m_Value: 1
+  - {fileID: -4813540482125101631}
 --- !u!114 &5116155327792132292
 MonoBehaviour:
   m_ObjectHideFlags: 3

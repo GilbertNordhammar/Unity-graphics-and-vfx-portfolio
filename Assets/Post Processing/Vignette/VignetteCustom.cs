@@ -6,7 +6,7 @@ using System;
 namespace HDRPAdditions
 {
     [Serializable, VolumeComponentMenu("Post-processing/Custom/Vignette (Custom)")]
-    public sealed class VignetteCustom : PostProcessingBaseComponent<VignetteCustom>
+    public sealed class VignetteCustom : PostProcessingComponentBase
     {
         public ColorParameter _color = new ColorParameter(Color.black);
         public Vector2Parameter _center = new Vector2Parameter(new Vector2(0.5f, 0.5f));

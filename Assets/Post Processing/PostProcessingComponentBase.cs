@@ -6,7 +6,7 @@ using System;
 namespace HDRPAdditions
 {
     [Serializable]
-    public abstract class PostProcessingBaseComponent<TComponent> : CustomPostProcessVolumeComponent, IPostProcessComponent where TComponent : CustomPostProcessVolumeComponent
+    public abstract class PostProcessingComponentBase : CustomPostProcessVolumeComponent, IPostProcessComponent
     {
         public BoolParameter _enabled = new BoolParameter(false, true);
 
