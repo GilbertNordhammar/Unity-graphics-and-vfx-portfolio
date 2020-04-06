@@ -9,9 +9,10 @@ namespace HDRPAdditions
 {
     [Serializable, VolumeComponentMenu("Post-processing/Custom/Bloom (Custom)")]
     public sealed class BloomCustom : PostProcessingComponentBase
-    { 
-        public FloatParameter _threshold = new FloatParameter(0.5f);
-        public FloatParameter _intensity = new FloatParameter(1f);
+    { //
+        public MinFloatParameter _threshold = new MinFloatParameter(0.5f, 0f);
+        public ClampedFloatParameter _softThreshold = new ClampedFloatParameter(0.5f, 0, 1);
+        public MinFloatParameter _intensity = new MinFloatParameter(1f, 0f);
         public ClampedIntParameter _scatter = new ClampedIntParameter(3, 1, 16);
         public ColorParameter _tint = new ColorParameter(Color.white);
 
@@ -29,9 +30,18 @@ namespace HDRPAdditions
         {
             cmd.BeginSample("Custom Bloom");
 
-            _material.SetFloat("_highlightThreshold", _threshold.value);
             _material.SetFloat("_highlightIntensity", _intensity.value);
             _material.SetColor("_tintColor", _tint.value);
+
+            float knee = _threshold.value * _softThreshold.value;
+            Vector4 highlightFilter = new Vector4(
+                _threshold.value,
+                _threshold.value - knee,
+                2f * knee,
+                0.25f / (knee + 0.00001f)
+            );
+            _material.SetVector("_highlightFilter", highlightFilter);
+
 
             if(_initialRth != null) {
                 _initialRth.Release();

@@ -29,7 +29,7 @@
     TEXTURE2D(_blurTexture);
     float2 _blurTextureSize;
     float2 _blurSampleOffsets[11];
-    float _highlightThreshold;
+    float4 _highlightFilter;
     float _highlightIntensity;
     float3 _tintColor;
     
@@ -48,13 +48,16 @@
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
         uint2 positionSS = input.texcoord * _ScreenSize.xy;
-
         float3 frame = LOAD_TEXTURE2D_X(_frameTexture, positionSS).xyz;
+
 		float brightness = (frame.r * 0.2126) + (frame.g * 0.7152) + (frame.b * 0.722);
-        
-        float3 outColor = brightness > _highlightThreshold ? 
-            frame * brightness * _highlightIntensity * _tintColor:
-            0;
+        half soft = brightness - _highlightFilter.y;
+        soft = clamp(soft, 0, _highlightFilter.z);
+        soft = soft * soft * _highlightFilter.w;
+        half contribution = max(soft, brightness - _highlightFilter.x);
+		contribution /= max(brightness, 0.00001);
+
+        float3 outColor =  frame * contribution * _highlightIntensity * _tintColor;
 
         return float4(outColor, 1);
     }

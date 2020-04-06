@@ -20,9 +20,57 @@ MonoBehaviour:
   _threshold:
     m_OverrideState: 0
     m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
   _intensity:
     m_OverrideState: 0
     m_Value: 1
+    min: 0
+  _scatter:
+    m_OverrideState: 0
+    m_Value: 3
+    min: 1
+    max: 16
+  _tint:
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+--- !u!114 &-3572617965335243490
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BloomCustom
+  m_EditorClassIdentifier: Assembly-CSharp:HDRPAdditions:BloomCustom
+  active: 1
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  _threshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
+  _intensity:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
   _scatter:
     m_OverrideState: 0
     m_Value: 3
@@ -54,9 +102,16 @@ MonoBehaviour:
   _threshold:
     m_OverrideState: 0
     m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
   _intensity:
     m_OverrideState: 0
     m_Value: 1
+    min: 0
   _scatter:
     m_OverrideState: 0
     m_Value: 3
@@ -82,41 +137,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 6608273264539357411}
-  - {fileID: 2201120291753581809}
---- !u!114 &2201120291753581809
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: BloomCustom
-  m_EditorClassIdentifier: Assembly-CSharp:HDRPAdditions:BloomCustom
-  active: 1
-  m_AdvancedMode: 0
-  _enabled:
-    m_OverrideState: 1
-    m_Value: 1
-  _threshold:
-    m_OverrideState: 1
-    m_Value: 0.5
-  _intensity:
-    m_OverrideState: 1
-    m_Value: 2.11
-  _scatter:
-    m_OverrideState: 1
-    m_Value: 1
-    min: 1
-    max: 16
-  _tint:
-    m_OverrideState: 1
-    m_Value: {r: 0.8509804, g: 0.6774813, b: 0.18823528, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
 --- !u!114 &5630313557435366185
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -137,9 +157,16 @@ MonoBehaviour:
   _threshold:
     m_OverrideState: 0
     m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
   _intensity:
     m_OverrideState: 0
     m_Value: 1
+    min: 0
   _scatter:
     m_OverrideState: 0
     m_Value: 3
@@ -171,9 +198,16 @@ MonoBehaviour:
   _threshold:
     m_OverrideState: 0
     m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
   _intensity:
     m_OverrideState: 0
     m_Value: 1
+    min: 0
   _scatter:
     m_OverrideState: 0
     m_Value: 3
@@ -258,9 +292,16 @@ MonoBehaviour:
   _threshold:
     m_OverrideState: 0
     m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
   _intensity:
     m_OverrideState: 0
     m_Value: 1
+    min: 0
   _scatter:
     m_OverrideState: 0
     m_Value: 3
@@ -292,9 +333,16 @@ MonoBehaviour:
   _threshold:
     m_OverrideState: 0
     m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
   _intensity:
     m_OverrideState: 0
     m_Value: 1
+    min: 0
   _scatter:
     m_OverrideState: 0
     m_Value: 3
