@@ -9,7 +9,7 @@ namespace HDRPAdditions
 {
     [Serializable, VolumeComponentMenu("Post-processing/Custom/Bloom (Custom)")]
     public sealed class BloomCustom : PostProcessingComponentBase
-    { //
+    {
         public MinFloatParameter _threshold = new MinFloatParameter(0.5f, 0f);
         public ClampedFloatParameter _softThreshold = new ClampedFloatParameter(0.5f, 0, 1);
         public MinFloatParameter _intensity = new MinFloatParameter(1f, 0f);
@@ -19,6 +19,7 @@ namespace HDRPAdditions
         public override CustomPostProcessInjectionPoint injectionPoint => CustomPostProcessInjectionPoint.AfterPostProcess;
         const string _shaderName = "Hidden/Shader/Bloom";
         enum ShaderPass { Highlight, Blur, Final }
+        enum SamplingDirection { Horizontal, Vertical }
         RTHandle _initialRth;
 
         public BloomCustom()
@@ -26,10 +27,7 @@ namespace HDRPAdditions
             Initialize(_shaderName);
         }
 
-        public override void Render(CommandBuffer cmd, HDCamera camera, RTHandle source, RTHandle destination)
-        {
-            cmd.BeginSample("Custom Bloom");
-
+        void ApplyParameters() {
             _material.SetFloat("_highlightIntensity", _intensity.value);
             _material.SetColor("_tintColor", _tint.value);
 
@@ -41,46 +39,58 @@ namespace HDRPAdditions
                 0.25f / (knee + 0.00001f)
             );
             _material.SetVector("_highlightFilter", highlightFilter);
+        }
 
-
+        void CreateHighlightFilter(CommandBuffer cmd, RTHandle source, HDCamera camera) {
             if(_initialRth != null) {
                 _initialRth.Release();
             }
             _initialRth = RTHandles.Alloc(camera.actualWidth / 2, camera.actualHeight / 2);
-            
-            var props = new MaterialPropertyBlock();
-            props.SetTexture("_frameTexture", source);
-            HDUtils.DrawFullScreen(cmd, _material, _initialRth, props, (int) ShaderPass.Highlight);
-            cmd.SetGlobalTexture("_blurTexture", _initialRth);
 
-            
+            _material.SetTexture("_frameTexture", source);
+            HDUtils.DrawFullScreen(cmd, _material, _initialRth, null, (int) ShaderPass.Highlight);
+            cmd.SetGlobalTexture("_blurTexture", _initialRth);
+        }
+
+        Vector4[] GetBlurSamplingOffsets(Vector2 textureDimensions, SamplingDirection direction) {
+            Vector4 increment;
+            if(direction == SamplingDirection.Horizontal) {
+                float texelWidth = 1f / textureDimensions.x;
+                increment = new Vector4(texelWidth, 0);
+            } else {
+                float texelHeight = 1f / textureDimensions.y;
+                increment = new Vector4(0, texelHeight);
+            }
+
+            Vector4[] samplingOffsets = new Vector4[11];
+            for(int j = -5; j <= 5; j++) {
+                samplingOffsets[j+5] = j * increment;
+            }
+
+            return samplingOffsets;
+        }
+
+        void BlurHighlight(CommandBuffer cmd, HDCamera camera) {
             cmd.BeginSample("Downsampling");
             var tempRts = new List<RenderTexture>();
             for(int i = 0; i < _scatter.value; i++) {
                 int divisor = (int) Math.Pow(2, i+1);
                 int sampleTexWidth = camera.actualWidth / divisor;
                 int sampleTexHeight = camera.actualHeight / divisor;
+                Vector2 samplingTexDimensions = new Vector2(sampleTexWidth, sampleTexHeight);
 
                 cmd.SetGlobalVector("_blurTextureSize", new Vector4(sampleTexWidth, sampleTexHeight));
-                var blurSampleOffset = new Vector4[11];
                 
                 // horizontal blurring
-                float sampleTexTexelWidth = 1f / sampleTexWidth;
-                for(int j = -5; j <= 5; j++) {
-                    blurSampleOffset[j+5] = j * new Vector4(sampleTexTexelWidth, 0);
-                }
-                cmd.SetGlobalVectorArray("_blurSampleOffsets", blurSampleOffset);
+                cmd.SetGlobalVectorArray("_blurSampleOffsets", 
+                    GetBlurSamplingOffsets(samplingTexDimensions, SamplingDirection.Horizontal));
                 var rt1 = RenderTexture.GetTemporary(sampleTexWidth, sampleTexHeight);
                 cmd.Blit(null, rt1, _material, (int) ShaderPass.Blur);
                 cmd.SetGlobalTexture("_blurTexture", rt1);
-
-                // vertical blurring asdasddas
-                float sampleTexTexelHeight = 1f / sampleTexHeight;
-                for(int j = -5; j <= 5; j++) {
-                    blurSampleOffset[j+5] = j * new Vector4(0, sampleTexTexelHeight);
-                }
                 
-                cmd.SetGlobalVectorArray("_blurSampleOffsets", blurSampleOffset);
+                // vertical blurring
+                cmd.SetGlobalVectorArray("_blurSampleOffsets", 
+                    GetBlurSamplingOffsets(samplingTexDimensions, SamplingDirection.Vertical));
                 var rt2 = i < _scatter.value-1  ? 
                     RenderTexture.GetTemporary(sampleTexWidth/2, sampleTexHeight/2) :
                     RenderTexture.GetTemporary(sampleTexWidth * 2, sampleTexHeight * 2);
@@ -102,27 +112,20 @@ namespace HDRPAdditions
                 int divisor = (int) Math.Pow(2, _scatter.value-i-1);
                 int sampleTexWidth = camera.actualWidth / divisor;
                 int sampleTexHeight = camera.actualHeight / divisor;
-    
+                Vector2 samplingTexDimensions = new Vector2(sampleTexWidth, sampleTexHeight);
+                
                 cmd.SetGlobalVector("_blurTextureSize", new Vector4(sampleTexWidth, sampleTexHeight));
-                var blurSampleOffset = new Vector4[11];
                 
                 // horizontal blurring
-                float sampleTexTexelWidth = 1f / sampleTexWidth;
-                for(int j = -5; j <= 5; j++) {
-                    blurSampleOffset[j+5] = j * new Vector4(sampleTexTexelWidth, 0);
-                }
-                cmd.SetGlobalVectorArray("_blurSampleOffsets", blurSampleOffset);
+                cmd.SetGlobalVectorArray("_blurSampleOffsets", 
+                    GetBlurSamplingOffsets(samplingTexDimensions, SamplingDirection.Horizontal));
                 var rt1 = RenderTexture.GetTemporary(sampleTexWidth, sampleTexHeight);
                 cmd.Blit(null, rt1, _material, (int) ShaderPass.Blur);
                 cmd.SetGlobalTexture("_blurTexture", rt1);
 
                 // vertical blurring
-                float sampleTexTexelHeight = 1f / sampleTexHeight;
-                for(int j = -5; j <= 5; j++) {
-                    blurSampleOffset[j+5] = j * new Vector4(0, sampleTexTexelHeight);
-                }
-                
-                cmd.SetGlobalVectorArray("_blurSampleOffsets", blurSampleOffset);
+                cmd.SetGlobalVectorArray("_blurSampleOffsets", 
+                    GetBlurSamplingOffsets(samplingTexDimensions, SamplingDirection.Vertical));
                 var rt2 = RenderTexture.GetTemporary(sampleTexWidth*2, sampleTexHeight*2);
                 cmd.Blit(null, rt2, _material, (int) ShaderPass.Blur);
                 cmd.SetGlobalTexture("_blurTexture", rt2);
@@ -135,8 +138,17 @@ namespace HDRPAdditions
             }
 
             cmd.EndSample("Upsampling");
+        }
+
+        public override void Render(CommandBuffer cmd, HDCamera camera, RTHandle source, RTHandle destination)
+        {
+            cmd.BeginSample("Custom Bloom");
+
+            ApplyParameters();
+            CreateHighlightFilter(cmd, source, camera);
+            BlurHighlight(cmd, camera);
             
-            HDUtils.DrawFullScreen(cmd, _material, destination, props, (int) ShaderPass.Final);
+            HDUtils.DrawFullScreen(cmd, _material, destination, null, (int) ShaderPass.Final);
 
             cmd.EndSample("Custom Bloom");
         }

@@ -57,28 +57,28 @@ MonoBehaviour:
   m_AdvancedMode: 0
   _enabled:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   _threshold:
-    m_OverrideState: 0
-    m_Value: 0.5
+    m_OverrideState: 1
+    m_Value: 0.89
     min: 0
   _softThreshold:
-    m_OverrideState: 0
-    m_Value: 0.5
+    m_OverrideState: 1
+    m_Value: 0.45
     min: 0
     max: 1
   _intensity:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 5.01
     min: 0
   _scatter:
-    m_OverrideState: 0
-    m_Value: 3
+    m_OverrideState: 1
+    m_Value: 1
     min: 1
     max: 16
   _tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.7896166, g: 0.27843145, b: 0.85882354, a: 1}
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 6608273264539357411}
+  - {fileID: -3572617965335243490}
 --- !u!114 &5630313557435366185
 MonoBehaviour:
   m_ObjectHideFlags: 3
