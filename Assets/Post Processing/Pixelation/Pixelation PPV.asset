@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Value: 1
   _resolution:
     m_OverrideState: 1
-    m_Value: {x: 200, y: 200}
+    m_Value: {x: 100, y: 100}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
