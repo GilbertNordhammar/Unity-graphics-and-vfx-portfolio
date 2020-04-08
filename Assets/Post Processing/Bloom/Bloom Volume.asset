@@ -1,5 +1,87 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7751498990578301483
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BloomCustom
+  m_EditorClassIdentifier: Assembly-CSharp:HDRPAdditions:BloomCustom
+  active: 1
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  _threshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
+  _intensity:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  _scatter:
+    m_OverrideState: 0
+    m_Value: 3
+    min: 1
+    max: 16
+  _tint:
+    m_OverrideState: 1
+    m_Value: {r: 0.8773585, g: 0.15312389, b: 0.15312389, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+--- !u!114 &-4931543564917069623
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BloomCustom
+  m_EditorClassIdentifier: Assembly-CSharp:HDRPAdditions:BloomCustom
+  active: 1
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  _threshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
+  _intensity:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  _scatter:
+    m_OverrideState: 0
+    m_Value: 3
+    min: 1
+    max: 16
+  _tint:
+    m_OverrideState: 1
+    m_Value: {r: 0.8584906, g: 0.06074225, b: 0.06074225, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
 --- !u!114 &-4325918639944060217
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -69,7 +151,7 @@ MonoBehaviour:
     max: 1
   _intensity:
     m_OverrideState: 1
-    m_Value: 5.01
+    m_Value: 6.6
     min: 0
   _scatter:
     m_OverrideState: 1
@@ -123,6 +205,47 @@ MonoBehaviour:
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
+--- !u!114 &-805473803758657390
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BloomCustom
+  m_EditorClassIdentifier: Assembly-CSharp:HDRPAdditions:BloomCustom
+  active: 1
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  _threshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
+  _intensity:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  _scatter:
+    m_OverrideState: 1
+    m_Value: 3
+    min: 1
+    max: 16
+  _tint:
+    m_OverrideState: 1
+    m_Value: {r: 0.8862745, g: 0.09803923, b: 0.7400331, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +260,89 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 6608273264539357411}
-  - {fileID: -3572617965335243490}
+  - {fileID: -4931543564917069623}
+--- !u!114 &226204760330576072
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BloomCustom
+  m_EditorClassIdentifier: Assembly-CSharp:HDRPAdditions:BloomCustom
+  active: 1
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  _threshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
+  _intensity:
+    m_OverrideState: 1
+    m_Value: 2
+    min: 0
+  _scatter:
+    m_OverrideState: 1
+    m_Value: 1
+    min: 1
+    max: 16
+  _tint:
+    m_OverrideState: 1
+    m_Value: {r: 0.118725546, g: 0.8679245, b: 0.12651208, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+--- !u!114 &3131488916753124148
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BloomCustom
+  m_EditorClassIdentifier: Assembly-CSharp:HDRPAdditions:BloomCustom
+  active: 1
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  _threshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0
+    max: 1
+  _intensity:
+    m_OverrideState: 1
+    m_Value: 1.84
+    min: 0
+  _scatter:
+    m_OverrideState: 1
+    m_Value: 1
+    min: 1
+    max: 16
+  _tint:
+    m_OverrideState: 1
+    m_Value: {r: 0.31071422, g: 0.8867924, b: 0.2216981, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
 --- !u!114 &5630313557435366185
 MonoBehaviour:
   m_ObjectHideFlags: 3

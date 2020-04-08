@@ -55,17 +55,18 @@ namespace HDRPAdditions
             cmd.SetGlobalTexture("_blurTexture", _initialRth);
         }
 
-        Vector4[] GetBlurSamplingOffsets(Vector2 textureDimensions, SamplingDirection direction)
+        Vector4[] GetBlurSamplingOffsets(int textureWidth, int textureHeight,
+                                         SamplingDirection direction)
         {
             Vector4 increment;
             if (direction == SamplingDirection.Horizontal)
             {
-                float texelWidth = 1f / textureDimensions.x;
+                float texelWidth = 1f / textureWidth;
                 increment = new Vector4(texelWidth, 0);
             }
             else
             {
-                float texelHeight = 1f / textureDimensions.y;
+                float texelHeight = 1f / textureHeight;
                 increment = new Vector4(0, texelHeight);
             }
 
@@ -81,41 +82,39 @@ namespace HDRPAdditions
         void BlurHighlight(CommandBuffer cmd, HDCamera camera)
         {
             cmd.BeginSample("Downsampling");
+
             var tempRts = new List<RenderTexture>();
             for (int i = 0; i < _scatter.value; i++)
             {
                 int divisor = (int)Math.Pow(2, i + 1);
                 int sampleTexWidth = camera.actualWidth / divisor;
                 int sampleTexHeight = camera.actualHeight / divisor;
-                Vector2 samplingTexDimensions = new Vector2(sampleTexWidth, sampleTexHeight);
 
                 cmd.SetGlobalVector("_blurTextureSize", new Vector4(sampleTexWidth, sampleTexHeight));
 
                 // horizontal blurring
                 cmd.SetGlobalVectorArray("_blurSampleOffsets",
-                    GetBlurSamplingOffsets(samplingTexDimensions, SamplingDirection.Horizontal));
+                    GetBlurSamplingOffsets(sampleTexWidth, sampleTexHeight, SamplingDirection.Horizontal));
                 var rt1 = RenderTexture.GetTemporary(sampleTexWidth, sampleTexHeight);
-                cmd.Blit(null, rt1, _material, (int)ShaderPass.Blur);
-                cmd.SetGlobalTexture("_blurTexture", rt1);
+                ShaderUtils.RenderToGlobalTexture(cmd, rt1, "_blurTexture", _material, (int)ShaderPass.Blur);
 
                 // vertical blurring
                 cmd.SetGlobalVectorArray("_blurSampleOffsets",
-                    GetBlurSamplingOffsets(samplingTexDimensions, SamplingDirection.Vertical));
+                    GetBlurSamplingOffsets(sampleTexWidth, sampleTexHeight, SamplingDirection.Vertical));
                 var rt2 = i < _scatter.value - 1 ?
                     RenderTexture.GetTemporary(sampleTexWidth / 2, sampleTexHeight / 2) :
                     RenderTexture.GetTemporary(sampleTexWidth * 2, sampleTexHeight * 2);
-                cmd.Blit(null, rt2, _material, (int)ShaderPass.Blur);
-                cmd.SetGlobalTexture("_blurTexture", rt2);
+                ShaderUtils.RenderToGlobalTexture(cmd, rt2, "_blurTexture", _material, (int)ShaderPass.Blur);
 
                 tempRts.Add(rt1);
                 tempRts.Add(rt2);
             }
+            cmd.EndSample("Downsampling");
 
             foreach (var rt in tempRts)
             {
                 RenderTexture.ReleaseTemporary(rt);
             }
-            cmd.EndSample("Downsampling");
 
             cmd.BeginSample("Upsampling");
             tempRts = new List<RenderTexture>();
@@ -124,32 +123,29 @@ namespace HDRPAdditions
                 int divisor = (int)Math.Pow(2, _scatter.value - i - 1);
                 int sampleTexWidth = camera.actualWidth / divisor;
                 int sampleTexHeight = camera.actualHeight / divisor;
-                Vector2 samplingTexDimensions = new Vector2(sampleTexWidth, sampleTexHeight);
 
                 cmd.SetGlobalVector("_blurTextureSize", new Vector4(sampleTexWidth, sampleTexHeight));
 
                 // horizontal blurring
                 cmd.SetGlobalVectorArray("_blurSampleOffsets",
-                    GetBlurSamplingOffsets(samplingTexDimensions, SamplingDirection.Horizontal));
+                    GetBlurSamplingOffsets(sampleTexWidth, sampleTexHeight, SamplingDirection.Horizontal));
                 var rt1 = RenderTexture.GetTemporary(sampleTexWidth, sampleTexHeight);
-                cmd.Blit(null, rt1, _material, (int)ShaderPass.Blur);
-                cmd.SetGlobalTexture("_blurTexture", rt1);
+                ShaderUtils.RenderToGlobalTexture(cmd, rt1, "_blurTexture", _material, (int)ShaderPass.Blur);
 
                 // vertical blurring
                 cmd.SetGlobalVectorArray("_blurSampleOffsets",
-                    GetBlurSamplingOffsets(samplingTexDimensions, SamplingDirection.Vertical));
+                    GetBlurSamplingOffsets(sampleTexWidth, sampleTexHeight, SamplingDirection.Vertical));
                 var rt2 = RenderTexture.GetTemporary(sampleTexWidth * 2, sampleTexHeight * 2);
-                cmd.Blit(null, rt2, _material, (int)ShaderPass.Blur);
-                cmd.SetGlobalTexture("_blurTexture", rt2);
+                ShaderUtils.RenderToGlobalTexture(cmd, rt2, "_blurTexture", _material, (int)ShaderPass.Blur);
 
                 tempRts.Add(rt1);
                 tempRts.Add(rt2);
             }
+
             foreach (var rt in tempRts)
             {
                 RenderTexture.ReleaseTemporary(rt);
             }
-
             cmd.EndSample("Upsampling");
         }
 
