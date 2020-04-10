@@ -259,8 +259,28 @@ MonoBehaviour:
   m_Name: Bloom Volume
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 6608273264539357411}
-  - {fileID: -4931543564917069623}
+  - {fileID: 6891020449799620286}
+  - {fileID: 61102278618919175}
+--- !u!114 &61102278618919175
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d850d69dcb8a35949bfba0c73e5a5f09, type: 3}
+  m_Name: Pixelation
+  m_EditorClassIdentifier: 
+  active: 0
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  _resolution:
+    m_OverrideState: 0
+    m_Value: {x: 100, y: 100}
 --- !u!114 &226204760330576072
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -425,7 +445,7 @@ MonoBehaviour:
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
---- !u!114 &6608273264539357411
+--- !u!114 &6891020449799620286
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -434,50 +454,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24f077503be6ae942a1e1245dbd53ea9, type: 3}
-  m_Name: Bloom
-  m_EditorClassIdentifier: 
-  active: 0
+  m_Script: {fileID: 0}
+  m_Name: BloomCustom
+  m_EditorClassIdentifier: Assembly-CSharp:HDRPAdditions:BloomCustom
+  active: 1
   m_AdvancedMode: 0
-  quality:
+  _enabled:
     m_OverrideState: 1
-    m_Value: 2
-  threshold:
+    m_Value: 1
+  _threshold:
     m_OverrideState: 1
-    m_Value: 0.57
+    m_Value: 1.08
     min: 0
-  intensity:
-    m_OverrideState: 1
-    m_Value: 0.63
-    min: 0
-    max: 1
-  scatter:
-    m_OverrideState: 1
-    m_Value: 0
+  _softThreshold:
+    m_OverrideState: 0
+    m_Value: 0.5
     min: 0
     max: 1
-  tint:
+  _intensity:
     m_OverrideState: 1
-    m_Value: {r: 0.9433962, g: 0.45834818, b: 0.45834818, a: 1}
+    m_Value: 3
+    min: 0
+  _scatter:
+    m_OverrideState: 1
+    m_Value: 1
+    min: 1
+    max: 16
+  _tint:
+    m_OverrideState: 1
+    m_Value: {r: 0.8018868, g: 0.02647741, b: 0.02647741, a: 1}
     hdr: 0
-    showAlpha: 0
+    showAlpha: 1
     showEyeDropper: 1
-  dirtTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
-  dirtIntensity:
-    m_OverrideState: 1
-    m_Value: 0
-    min: 0
-  anamorphic:
-    m_OverrideState: 0
-    m_Value: 1
-  m_Resolution:
-    m_OverrideState: 0
-    m_Value: 2
-  m_HighQualityFiltering:
-    m_OverrideState: 0
-    m_Value: 1
 --- !u!114 &8150517684424531551
 MonoBehaviour:
   m_ObjectHideFlags: 3
