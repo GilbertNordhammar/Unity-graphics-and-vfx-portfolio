@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace HDRPAdditions
 {
-    [Serializable, VolumeComponentMenu("Post-processing/Custom/Bloom (Custom)")]
-    public sealed class BloomCustom : PostProcessingComponentBase
+    [Serializable, VolumeComponentMenu("Post-processing/Custom/Bloom (HDRPAdditions)")]
+    public sealed class Bloom : PostProcessingComponentBase
     {
-        public MinFloatParameter _threshold = new MinFloatParameter(0.5f, 0f);
+        public MinFloatParameter _threshold = new MinFloatParameter(0.8f, 0f);
         public ClampedFloatParameter _softThreshold = new ClampedFloatParameter(0.5f, 0, 1);
         public MinFloatParameter _intensity = new MinFloatParameter(1f, 0f);
-        public ClampedIntParameter _scatter = new ClampedIntParameter(3, 1, 16);
+        public ClampedIntParameter _scatter = new ClampedIntParameter(2, 1, 7);
         public ColorParameter _tint = new ColorParameter(Color.white);
 
         public override CustomPostProcessInjectionPoint injectionPoint => CustomPostProcessInjectionPoint.AfterPostProcess;
@@ -22,9 +22,22 @@ namespace HDRPAdditions
         enum SamplingDirection { Horizontal, Vertical }
         RTHandle _initialRth;
 
-        public BloomCustom()
+        public Bloom()
         {
             Initialize(_shaderName);
+        }
+
+        public override void Render(CommandBuffer cmd, HDCamera camera, RTHandle source, RTHandle destination)
+        {
+            cmd.BeginSample("Bloom (HDRPAdditions)");
+
+            ApplyParameters();
+            CreateHighlightFilter(cmd, source, camera);
+            BlurHighlight(cmd, camera);
+
+            HDUtils.DrawFullScreen(cmd, _material, destination, null, (int)ShaderPass.Final);
+
+            cmd.EndSample("Bloom (HDRPAdditions)");
         }
 
         void ApplyParameters()
@@ -83,13 +96,19 @@ namespace HDRPAdditions
         {
             cmd.BeginSample("Downsampling");
 
+            var sampligIterations = _scatter.value;
             var tempRts = new List<RenderTexture>();
-            for (int i = 0; i < _scatter.value; i++)
+            int divisor = 1;
+            for (int i = 0; i < sampligIterations; i++)
             {
-                int divisor = (int)Math.Pow(2, i + 1);
+                divisor *= 2;
                 int sampleTexWidth = camera.actualWidth / divisor;
                 int sampleTexHeight = camera.actualHeight / divisor;
-
+                if (sampleTexHeight < 2 || sampleTexWidth < 2)
+                {
+                    sampligIterations = i - 1;
+                    break;
+                }
                 cmd.SetGlobalVector("_blurTextureSize", new Vector4(sampleTexWidth, sampleTexHeight));
 
                 // horizontal blurring
@@ -103,7 +122,7 @@ namespace HDRPAdditions
                     GetBlurSamplingOffsets(sampleTexWidth, sampleTexHeight, SamplingDirection.Vertical));
                 var rt2 = i < _scatter.value - 1 ?
                     RenderTexture.GetTemporary(sampleTexWidth / 2, sampleTexHeight / 2) :
-                    RenderTexture.GetTemporary(sampleTexWidth * 2, sampleTexHeight * 2);
+                    RenderTexture.GetTemporary(sampleTexWidth, sampleTexHeight);
                 ShaderUtils.RenderToGlobalTexture(cmd, rt2, "_blurTexture", _material, (int)ShaderPass.Blur);
 
                 tempRts.Add(rt1);
@@ -118,24 +137,27 @@ namespace HDRPAdditions
 
             cmd.BeginSample("Upsampling");
             tempRts = new List<RenderTexture>();
-            for (int i = 0; i < _scatter.value - 1; i++)
+            for (int i = 0; i < sampligIterations; i++)
             {
-                int divisor = (int)Math.Pow(2, _scatter.value - i - 1);
                 int sampleTexWidth = camera.actualWidth / divisor;
                 int sampleTexHeight = camera.actualHeight / divisor;
-
                 cmd.SetGlobalVector("_blurTextureSize", new Vector4(sampleTexWidth, sampleTexHeight));
 
                 // horizontal blurring
                 cmd.SetGlobalVectorArray("_blurSampleOffsets",
                     GetBlurSamplingOffsets(sampleTexWidth, sampleTexHeight, SamplingDirection.Horizontal));
-                var rt1 = RenderTexture.GetTemporary(sampleTexWidth, sampleTexHeight);
+                var rt1 = RenderTexture.GetTemporary(sampleTexWidth * 2, sampleTexHeight * 2);
                 ShaderUtils.RenderToGlobalTexture(cmd, rt1, "_blurTexture", _material, (int)ShaderPass.Blur);
+
+                divisor /= 2;
+                sampleTexWidth = camera.actualWidth / divisor;
+                sampleTexHeight = camera.actualHeight / divisor;
+                cmd.SetGlobalVector("_blurTextureSize", new Vector4(sampleTexWidth, sampleTexHeight));
 
                 // vertical blurring
                 cmd.SetGlobalVectorArray("_blurSampleOffsets",
                     GetBlurSamplingOffsets(sampleTexWidth, sampleTexHeight, SamplingDirection.Vertical));
-                var rt2 = RenderTexture.GetTemporary(sampleTexWidth * 2, sampleTexHeight * 2);
+                var rt2 = RenderTexture.GetTemporary(sampleTexWidth, sampleTexHeight);
                 ShaderUtils.RenderToGlobalTexture(cmd, rt2, "_blurTexture", _material, (int)ShaderPass.Blur);
 
                 tempRts.Add(rt1);
@@ -147,19 +169,6 @@ namespace HDRPAdditions
                 RenderTexture.ReleaseTemporary(rt);
             }
             cmd.EndSample("Upsampling");
-        }
-
-        public override void Render(CommandBuffer cmd, HDCamera camera, RTHandle source, RTHandle destination)
-        {
-            cmd.BeginSample("Custom Bloom");
-
-            ApplyParameters();
-            CreateHighlightFilter(cmd, source, camera);
-            BlurHighlight(cmd, camera);
-
-            HDUtils.DrawFullScreen(cmd, _material, destination, null, (int)ShaderPass.Final);
-
-            cmd.EndSample("Custom Bloom");
         }
     }
 }
