@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8014357539879527038
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af91fce4bbef2b4d838924ff66e7f97, type: 3}
+  m_Name: MotionBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-7765181068619023529
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -360,11 +377,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: Bloom Volume
+  m_Name: Motion Blur
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 3585039870944643169}
-  - {fileID: 8859227298461218288}
+  - {fileID: -8014357539879527038}
 --- !u!114 &226204760330576072
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -515,26 +531,6 @@ MonoBehaviour:
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
---- !u!114 &3585039870944643169
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d850d69dcb8a35949bfba0c73e5a5f09, type: 3}
-  m_Name: Pixelation
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  _enabled:
-    m_OverrideState: 1
-    m_Value: 0
-  _resolution:
-    m_OverrideState: 0
-    m_Value: {x: 100, y: 100}
 --- !u!114 &5630313557435366185
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -782,47 +778,6 @@ MonoBehaviour:
       g: 1
       b: 1
       a: 1
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
---- !u!114 &8859227298461218288
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cfbf46a4eca340488920f4846d67d7c, type: 3}
-  m_Name: Bloom
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  _enabled:
-    m_OverrideState: 1
-    m_Value: 1
-  _threshold:
-    m_OverrideState: 0
-    m_Value: 0.8
-    min: 0
-  _softThreshold:
-    m_OverrideState: 0
-    m_Value: 0.5
-    min: 0
-    max: 1
-  _intensity:
-    m_OverrideState: 0
-    m_Value: 1
-    min: 0
-  _scatter:
-    m_OverrideState: 1
-    m_Value: 2
-    min: 1
-    max: 7
-  _tint:
-    m_OverrideState: 1
-    m_Value: {r: 0.8773585, g: 0.07035423, b: 0.07035423, a: 1}
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1

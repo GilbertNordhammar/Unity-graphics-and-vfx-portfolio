@@ -157,7 +157,7 @@ MonoBehaviour:
     type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 70297877217117
+      data1: 70297877086045
       data2: 4539628425463136256
     lodBias: 1
     lodBiasMode: 0
@@ -355,3 +355,5 @@ MonoBehaviour:
   - HDRPAdditions.VignetteCustom, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
     PublicKeyToken=null
   - HDRPAdditions.Bloom, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - HDRPAdditions.MotionBlur, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
