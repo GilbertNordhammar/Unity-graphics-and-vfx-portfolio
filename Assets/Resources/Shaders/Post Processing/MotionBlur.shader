@@ -49,18 +49,18 @@
     float4 CustomPostProcess(Varyings input) : SV_Target
     {
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-
         uint2 positionSS = input.texcoord * _ScreenSize.xy;
         float depth = LoadCameraDepth(positionSS);
         float4 worldPos = float4(ComputeWorldSpacePosition(input.texcoord, depth, UNITY_MATRIX_I_VP), 1);
         
-        // float4 posNDC = float4(input.texcoord * 2 - 1, depth, 1);
-        float4 posNDC = float4(input.texcoord.x * 2 - 1, (1 - input.texcoord.y) * 2 - 1, depth, 1); // should probably check what is up/down of UV before flipping
+        float4 posNDC = float4(input.texcoord.x * 2 - 1, input.texcoord.y * 2 - 1, depth, 1);
         float4 prevPosNDC = mul(UNITY_MATRIX_PREV_VP, worldPos);
+        prevPosNDC.y = -prevPosNDC.y; // y-direction becomes opposite of posNDC.y for some reason
         prevPosNDC /= prevPosNDC.w;
+
         float2 velocity = (prevPosNDC - posNDC)/2.f;
         velocity = abs(velocity) > 0.001 ? velocity : 0;
-        velocity = clamp(abs(velocity), -_maxVelocity, _maxVelocity);
+        velocity = clamp(velocity, -_maxVelocity, _maxVelocity);
         velocity *= InterleavedGradientNoise(positionSS, 0);
         velocity *= _isCameraRotating == 1 ? _turningIntensity : _intensity;
         
@@ -76,8 +76,6 @@
         }
         outColor /= _sampleCount;
         
-        // return float4(abs(posNDC.z - prevPosNDC.z) * 10,0,0,1);
-        // return float4(abs(velocity),0,1);
         return float4(outColor, 1);
     }
 
