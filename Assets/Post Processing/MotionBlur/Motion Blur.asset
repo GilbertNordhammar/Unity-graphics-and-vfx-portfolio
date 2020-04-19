@@ -1,22 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8014357539879527038
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af91fce4bbef2b4d838924ff66e7f97, type: 3}
-  m_Name: MotionBlur
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  _enabled:
-    m_OverrideState: 1
-    m_Value: 1
 --- !u!114 &-7765181068619023529
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -317,6 +300,41 @@ MonoBehaviour:
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
+--- !u!114 &-1641826727331647963
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af91fce4bbef2b4d838924ff66e7f97, type: 3}
+  m_Name: MotionBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  _enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  _intensity:
+    m_OverrideState: 1
+    m_Value: 10
+    min: 0
+  _turningIntensity:
+    m_OverrideState: 1
+    m_Value: 3
+    min: 0
+  _maxVelocity:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+    max: 1
+  _sampleCount:
+    m_OverrideState: 1
+    m_Value: 20
+    min: 2
+    max: 20
 --- !u!114 &-805473803758657390
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -380,7 +398,8 @@ MonoBehaviour:
   m_Name: Motion Blur
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -8014357539879527038}
+  - {fileID: 3326687129454348379}
+  - {fileID: -1641826727331647963}
 --- !u!114 &226204760330576072
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -531,6 +550,54 @@ MonoBehaviour:
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
+--- !u!114 &3326687129454348379
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf384b154398e341b6b29969c078198, type: 3}
+  m_Name: MotionBlur
+  m_EditorClassIdentifier: 
+  active: 0
+  m_AdvancedMode: 0
+  quality:
+    m_OverrideState: 1
+    m_Value: 3
+  intensity:
+    m_OverrideState: 1
+    m_Value: 200
+    min: 0
+  maximumVelocity:
+    m_OverrideState: 0
+    m_Value: 200
+    min: 0
+    max: 1500
+  minimumVelocity:
+    m_OverrideState: 1
+    m_Value: 0
+    min: 0
+    max: 64
+  cameraRotationVelocityClamp:
+    m_OverrideState: 0
+    m_Value: 0.03
+    min: 0
+    max: 0.2
+  depthComparisonExtent:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+    max: 20
+  cameraMotionBlur:
+    m_OverrideState: 0
+    m_Value: 1
+  m_SampleCount:
+    m_OverrideState: 0
+    m_Value: 8
+    min: 2
 --- !u!114 &5630313557435366185
 MonoBehaviour:
   m_ObjectHideFlags: 3
